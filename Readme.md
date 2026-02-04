@@ -27,6 +27,13 @@ Can we automate the construction of FCTOT? That is, say we have been given the o
 If we are in a maximal region and go a step up (or down) in forward construction to a region that is locally maximal, will it also be globally maximal for that point size (n+1 or n-1).
 We think that this might be true, and if it turns out to be true, it would be vastly beneficial for us, since it can drastically reduce the complexity of the tree of order types, since we then only have to explore the maximal nodes in each step. Hence, our exploration will then be on some specific paths in that tree.
 
+# Repo Contents
+
+Currently this repo has following files:
+* `read_and_plot.py`: this reads order type files (with `.b08`, `.b16` extensions), and plots the configurations and saves them as png files in subdirectories
+* `otypesXX.bYY`: order type files downloaded from Aichholzer database
+* `plots_otypesXX`: subdirectories containing plot images, plotted by `read_and_plot.py`
+
 
 
 # References
