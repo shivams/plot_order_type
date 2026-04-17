@@ -1,3 +1,19 @@
+# Updates:
+
+## ((2026-04-10)) GPU Speedup and some disappointing discoveries
+I have now written a GPU accelerated script to find the maximal order types for a given number of points. It is available in `gpu_read_and_plot.py`. This brought the computation from a few hours/days to a few seconds! Note that this script plots only the maximal configurations (those with the most non-empty triangles), however technically it could plot ALL configurations if we wanted to (but then we won't see the speedup since plotting would become the bottleneck).
+
+Anyways, a disappointing discovery was made: "TwiT configuration is not maximal after all!". This discovery happened as TwiT hypothesis got gradually weakened and broke down completely at n=8:
+* 6 Points: Among the 16 possible configurations for 6 points, there are 5 maximal configurations and all of them are TwiT configurations. Good so far. However, there is one TwiT configuration which is not maximal. This means that TwiT =/=> Maximality. However, Maximality ==> TwiT (so far). 
+* 7 Points: Among the 135 possible configurations for 7 points, there are 21 maximal configurations. And some of these maximal configurations satisfy TwiT while most do not. This means that, Maximality =/=> TwiT. Hence, the implication of TwiT and Maximality breaks down both ways now. However, I still have some hope that there will be always be some TwiT configurations among the maximal ones. But as I move to 8 point case, that hope also breaks down.
+* 8 Points: Among the 3315 possible configurations, there are 91 maximal configurations, and not a single one of them is TwiT!!
+* 9 Points: Among the 151000+ possible configurations, 78 are maximal. Somehow we see a drop in maximal configs here from n=8! TwiTs do appear here.
+* 10 points: Among the 14 million possible configurations, there are 2677 maximal configurations. TwiTs do appear here.
+
+So, it seems there is no correlation between TwiT set and the maximal configuration set.
+
+Nevertheless, an interesting observation was made: the outermost convex hull is always a triangle (atleast upto n=10 points that we plotted). 
+
 # ((2026-01-29)) About this Repo
 
 In this repo, I am storing stuff related to plotting the order types for different point sizes using the order type database of Aichholzer [1, 2, 3], which is available online at: http://www.ist.tugraz.at/staff/aichholzer/research/rp/triangulations/ordertypes/

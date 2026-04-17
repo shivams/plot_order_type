@@ -15,7 +15,11 @@ def get_triangle_lists(points):
     pts = points.astype(np.int64)
     
     def sign(p1, p2, p3):
-        return float((p1[0] - p3[0]) * (p2[1] - p3[1]) - (p2[0] - p3[0]) * (p1[1] - p3[1]))
+        # Using pure Python int (from Numpy int64) which has unlimited precision - guarantees zero overflow
+        x1, y1 = int(p1[0]), int(p1[1])
+        x2, y2 = int(p2[0]), int(p2[1])
+        x3, y3 = int(p3[0]), int(p3[1])
+        return (x1 - x3) * (y2 - y3) - (x2 - x3) * (y1 - y3)
 
     empty_tris = []
     non_empty_tris = []
@@ -208,17 +212,33 @@ def save_all_order_types(filepath, max_plots=500, num_processes=None, show_trian
 
 if __name__ == '__main__':
     # Example for 5 points (Only 3 images)
-    save_all_order_types('otypes05.b08')
+    # save_all_order_types('otypes05.b08')
 
     # Example for 6 points (16 images)
-    save_all_order_types('otypes06.b08')
+    # save_all_order_types('otypes06.b08')
 
-    save_all_order_types('otypes07.b08', max_plots=None)
+    # save_all_order_types('otypes07.b08', max_plots=None)
 
     # Example for 8 points (3315 images) - Will take a while!
-    # save_all_order_types('otypes08.b08', max_plots=None, num_processes=None, show_triangles_list=False, iterative_hulls=True)
+    save_all_order_types('otypes08.b08', max_plots=None, num_processes=None, show_triangles_list=False, iterative_hulls=True)
 
     # Example for 9 points (158 817 images) - Will take a while!
     # save_all_order_types('otypes09.b16', max_plots=None, num_processes=None)
 
 
+
+'''
+A note about how the number of order types (possible point configurations) are growing with the number of points:
+
+| Number of Points | Number of sets | File | 08 / 16 Bit | Filesize |
+|---|---|---|---|---|
+| 3 | 1 | [otypes03.b08](otypes03.b08) | 08 | 6 |
+| 4 | 2 | [otypes04.b08](otypes04.b08) | 08 | 16 |
+| 5 | 3 | [otypes05.b08](otypes05.b08) | 08 | 30 |
+| 6 | 16 | [otypes06.b08](otypes06.b08) | 08 | 192 |
+| 7 | 135 | [otypes07.b08](otypes07.b08) | 08 | 1 890 |
+| 8 | 3 315 | [otypes08.b08](otypes08.b08) | 08 | 53 040 |
+| 9 | 158 817 | [otypes09.b16](otypes09.b16) | 16 | 5 717 412 |
+| 10 | 14 309 547 | [otypes10.b16](otypes10.b16) | 16 | 572 381 880 |
+| 11 | 2 334 512 907 | --- | 16 | 96 GB |
+'''
